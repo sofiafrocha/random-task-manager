@@ -2,13 +2,14 @@
     <div class="a-RandomTask">
         <h1>Random Task Manager</h1>
         <input type="text" name="new_task" id="">
-        <button>Add task</button>
+        <button @click="addTask">Add task</button>
         <ol>
-            <li v-for="task in tasks" :class="{ 'is-done': task.status === 'done'}">
+            <li v-for="(task, index) in tasks" :key="index"
+                :class="{ 'is-done': task.status === 'done'}">
                 <span>
                     {{ task.text }}
                 </span>
-                <span v-for="emoji in task.pomodoros">🍅</span>
+                <span v-for="emoji in task.pomodoros" :key="emoji">🍅</span>
             </li>
         </ol>
 
@@ -27,7 +28,7 @@
 
             <div v-show="showNextTaskFollowup">
                 <button @click="finishTask">Finished the task</button>
-                <button>Didn't finish the task</button>
+                <button @click="duplicateTask">Didn't finish the task</button>
             </div>
         </div>
     </div>
@@ -110,15 +111,10 @@ export default {
             let randomInt = Math.random() * LINES;
             randomInt = Math.round(randomInt);
 
-            console.log('random number!', randomInt);
-
             if (randomInt < this.tasks.length) {
                 return randomInt;
             }  else {
-                const resto = randomInt % this.tasks.length;
-                console.log('resto', resto);
-
-                return resto;
+                return  randomInt % this.tasks.length;
             }
         },
         addPomodoro() {
@@ -129,6 +125,15 @@ export default {
             this.tasks[this.selectedTaskIndex].status = 'done';
             this.showNextTaskFollowup = false;
             this.selectedTaskIndex = null;
+        },
+        duplicateTask() {
+            const cloneTask = JSON.parse(JSON.stringify(this.tasks[this.selectedTaskIndex]));
+            this.tasks.push(cloneTask);
+
+            this.finishTask();
+        },
+        addTask() {
+
         }
     }
 }
