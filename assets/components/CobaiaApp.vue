@@ -1,7 +1,7 @@
 <template>
     <div class="a-RandomTask">
         <h1>Random Task Manager</h1>
-        <input type="text" name="new_task" id="">
+        <input v-model="newTaskText" type="text" name="new_task" id="">
         <button @click="addTask">Add task</button>
         <ol>
             <li v-for="(task, index) in tasks" :key="index"
@@ -15,7 +15,7 @@
 
         <hr>
 
-        <button @click="showNextTask">Get next task</button>
+        <button @click="showNextTask" :disabled="!hasAvailableTask">Get next task</button>
 
         <div v-show="selectedTaskIndex != null" class="a-RandomTask__next">
             <h2>Your next task:</h2>
@@ -41,10 +41,10 @@ export default {
     name: 'a-RandomTask',
     data() {
         return {
-            message: 'this message is coming from a Vue component!',
-            hasNextTask: true,
+            newTaskText: '',
             showNextTaskFollowup: false,
             tasks: [
+                /*
                 {
                     text: 'Go shopping',
                     pomodoros: 0,
@@ -75,6 +75,7 @@ export default {
                     pomodoros: 0,
                     status: 'to-do',
                 },
+                */
             ],
             selectedTaskIndex: null,
         }
@@ -133,7 +134,17 @@ export default {
             this.finishTask();
         },
         addTask() {
+            const text = this.newTaskText;
+            const status = 'to-do';
+            const pomodoros = 0;
 
+            this.tasks.push({
+                text,
+                status,
+                pomodoros,
+            });
+
+            this.newTaskText = '';
         }
     }
 }
