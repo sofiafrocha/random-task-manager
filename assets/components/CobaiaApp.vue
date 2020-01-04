@@ -2,7 +2,7 @@
     <div class="a-RandomTask">
         <h1>Random Task Manager</h1>
 
-        <small @click="resetLocalStorage">reset</small>
+        <small @click="resetData">reset</small>
 
         <form v-on:submit.prevent="addTask">
             <input v-model="newTaskText" type="text" name="new_task" id="">
@@ -133,7 +133,8 @@ export default {
                 this.tasks = JSON.parse(storedData);
             }
         },
-        resetLocalStorage() {
+        resetData() {
+            this.tasks = [];
             localStorage.removeItem('rtm_tasks');
         }
     }
