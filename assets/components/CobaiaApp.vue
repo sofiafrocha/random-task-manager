@@ -78,9 +78,31 @@ export default {
             selectedTaskIndex: null,
         }
     },
+    computed: {
+        availableTasks() {
+            return this.tasks.filter((task) => task.status === 'to-do');
+        },
+        hasAvailableTask() {
+            return this.availableTasks.length > 0;
+        }
+    },
     methods: {
         showNextTask() {
-            this.selectedTaskIndex = this.getNextTaskIndex();
+            if (this.hasAvailableTask) {
+                let nextTaskIndex = this.getNextTaskIndex();
+
+                while (this.tasks[nextTaskIndex].status === 'done') {
+                    console.log('🚨 i got a done task, trying the one below');
+
+                    nextTaskIndex += 1;
+
+                    if (nextTaskIndex === this.tasks.length) {
+                        nextTaskIndex = 0;
+                    }
+                }
+
+                this.selectedTaskIndex = nextTaskIndex;
+            }
 
             console.log('selectedTaskIndex', this.selectedTaskIndex);
         },
