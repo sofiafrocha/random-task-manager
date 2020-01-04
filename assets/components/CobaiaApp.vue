@@ -2,6 +2,8 @@
     <div class="a-RandomTask">
         <h1>Random Task Manager</h1>
 
+        <small @click="resetLocalStorage">reset</small>
+
         <form v-on:submit.prevent="addTask">
             <input v-model="newTaskText" type="text" name="new_task" id="">
             <button type="submit">Add task</button>
@@ -50,6 +52,9 @@ export default {
             selectedTaskIndex: null,
         }
     },
+    beforeMount() {
+        this.loadStateFromLocalStorage();
+    },
     computed: {
         availableTasks() {
             return this.tasks.filter((task) => task.status === 'to-do');
@@ -95,6 +100,7 @@ export default {
             this.addPomodoro();
             this.tasks[this.selectedTaskIndex].status = 'done';
             this.selectedTaskIndex = null;
+            this.saveStateToLocalStorage();
         },
         duplicateTask() {
             const cloneTask = JSON.parse(JSON.stringify(this.tasks[this.selectedTaskIndex]));
@@ -114,6 +120,21 @@ export default {
             });
 
             this.newTaskText = '';
+
+            this.saveStateToLocalStorage();
+        },
+        saveStateToLocalStorage() {
+            localStorage.setItem('rtm_tasks', JSON.stringify(this.tasks));
+        },
+        loadStateFromLocalStorage() {
+            const storedData = localStorage.getItem('rtm_tasks');
+
+            if (storedData) {
+                this.tasks = JSON.parse(storedData);
+            }
+        },
+        resetLocalStorage() {
+            localStorage.removeItem('rtm_tasks');
         }
     }
 }
