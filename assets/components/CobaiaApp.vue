@@ -1,8 +1,12 @@
 <template>
     <div class="a-RandomTask">
         <h1>Random Task Manager</h1>
-        <input v-model="newTaskText" type="text" name="new_task" id="">
-        <button @click="addTask">Add task</button>
+
+        <form v-on:submit.prevent="addTask">
+            <input v-model="newTaskText" type="text" name="new_task" id="">
+            <button type="submit">Add task</button>
+        </form>
+
         <ol>
             <li v-for="(task, index) in tasks" :key="index"
                 :class="{ 'is-done': task.status === 'done'}">
@@ -24,9 +28,8 @@
             </cite>
             <br>
             <br>
-            <button @click="addPomodoro">I did a 🍅</button>
 
-            <div v-show="showNextTaskFollowup">
+            <div>
                 <button @click="finishTask">Finished the task</button>
                 <button @click="duplicateTask">Didn't finish the task</button>
             </div>
@@ -43,40 +46,7 @@ export default {
         return {
             newTaskText: '',
             showNextTaskFollowup: false,
-            tasks: [
-                /*
-                {
-                    text: 'Go shopping',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                {
-                    text: 'Sharpen knives',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                {
-                    text: 'Prepare ingredients',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                {
-                    text: 'Cook food',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                {
-                    text: 'Set table',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                {
-                    text: 'Eat delicious food',
-                    pomodoros: 0,
-                    status: 'to-do',
-                },
-                */
-            ],
+            tasks: [],
             selectedTaskIndex: null,
         }
     },
