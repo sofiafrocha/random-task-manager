@@ -90,11 +90,10 @@ export default {
         },
         addPomodoro() {
             this.tasks[this.selectedTaskIndex].pomodoros += 1;
-            this.showNextTaskFollowup = true;
         },
         finishTask() {
+            this.addPomodoro();
             this.tasks[this.selectedTaskIndex].status = 'done';
-            this.showNextTaskFollowup = false;
             this.selectedTaskIndex = null;
         },
         duplicateTask() {
