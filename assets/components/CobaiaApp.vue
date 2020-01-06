@@ -12,10 +12,10 @@
         <ol>
             <li v-for="(task, index) in tasks" :key="index"
                 :class="{ 'is-done': task.status === 'done'}">
-                <span>
+                <span v-for="emoji in task.pomodoros" :key="emoji">🍅</span>
+                <span  class="a-RandomTask__task__text">
                     {{ task.text }}
                 </span>
-                <span v-for="emoji in task.pomodoros" :key="emoji">🍅</span>
             </li>
         </ol>
 
@@ -151,7 +151,7 @@ export default {
             list-style-type: none;
         }
 
-        li.is-done span:first-child {
+        li.is-done .a-RandomTask__task__text {
             color: lightgray;
             font-style: italic;
             text-decoration: line-through;
