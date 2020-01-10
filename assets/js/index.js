@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import CobaiaApp from '../components/CobaiaApp.vue';
+import RandomTask from '../components/RandomTask.vue';
 
 console.log('Hello world!');
 
 const app = new Vue({
 	render: (h) => {
-		return h(CobaiaApp);
+		return h(RandomTask);
 	},
 });
 app.$mount('.app-mount');
