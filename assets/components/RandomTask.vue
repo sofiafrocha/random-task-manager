@@ -1,9 +1,19 @@
 <template>
-	<div class="a-RandomTask">
+	<div class="a-RandomTask" :class="{ 'is-empty': tasks.length === 0 }">
 		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
+		<button
+			@click="resetData"
+			class="c-ResetButton"
+		>
+			Reset
+		</button>
 		<main>
 			<div class="c-TaskList">
 				<ol>
+					<li class="c-ListItem c-ListItem__heading"
+						v-if="tasks.length > 0">
+						Your tasks
+					</li>
 					<li
 						v-for="(task, index) in tasks"
 						:key="index"
@@ -42,7 +52,7 @@
 
 			<button
 				class="c-Button is-focused"
-				v-show="selectedTaskIndex === null"
+				v-show="tasks.length && selectedTaskIndex === null"
 				@click="showNextTask"
 			>
 				Get next task
@@ -186,6 +196,14 @@ export default {
 			max-width: 450px;
 			margin: 0 auto;
 		}
+
+		&.is-empty {
+			.c-AddItem {
+				position: relative;
+				margin: auto;
+				padding-top: 1rem;
+			}
+		}
 	}
 
 	.c-Overlay.is-active {
@@ -196,7 +214,7 @@ export default {
 		right: 0;
 		background-color: #263238;
 		opacity: 0.8;
-		z-index: 1;
+		z-index: 3;
 	}
 
 	.c-TaskList {
@@ -213,7 +231,7 @@ export default {
 			list-style-type: none;
 			overflow: hidden;
 			border-radius: 0.5rem;
-			z-index: 2;
+			z-index: 3;
 		}
 	}
 
@@ -226,6 +244,10 @@ export default {
 			border-top: 1px solid #f5f5f5;
 		}
 
+		&__heading {
+			color: lighten(#4db6ac, 30%);
+		}
+
 		&.is-done {
 			.c-ListItem__text {
 				color: lightgray;
@@ -235,7 +257,7 @@ export default {
 		}
 
 		&.is-selected {
-			z-index: 2;
+			z-index: 4;
 		}
 	}
 
@@ -292,7 +314,7 @@ export default {
 		font-family: 'Roboto Mono', monospace;
 
 		&.is-focused {
-			z-index: 2;
+			z-index: 4;
 		}
 
 		&.is-secondary {
@@ -300,6 +322,19 @@ export default {
 			border: 1px solid #f57c00;
 			border-bottom: 1px solid #ef6c00;
 		}
+	}
+
+	.c-ResetButton {
+		appearance: none;
+		background-color: transparent;
+		position: absolute;
+		top: 2rem;
+		left: 2rem;
+		color: #26a69a;
+		border: none;
+		font-family: 'Roboto Mono', monospace;
+		font-size: 0.8rem;
+		cursor: pointer;
 	}
 </style>
 
