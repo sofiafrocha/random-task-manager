@@ -1,12 +1,17 @@
 @import '../../node_modules/normalize.css/normalize';
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 
 body {
-    background-color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color:white;
+    // font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Roboto Mono', monospace;
     font-size: 16px;
 }
 
 .content {
-    margin: 2rem;
+    padding: 4rem;
+    box-sizing: border-box;
+    min-height: 100vh;
+    background-color: lighten(#b2dfdb, 3%);
     line-height: 1.6rem;
 }
