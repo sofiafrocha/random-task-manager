@@ -2,41 +2,43 @@
 	<div class="a-RandomTask">
 		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
 		<main>
-			<!-- h1>Random Task Manager</h1>
-
-			<small @click="resetData">reset</small -->
-
-			<!-- form @submit.prevent="addTask">
-				<input
-					id=""
-					v-model="newTaskText"
-					type="text"
-					name="new_task"
-				>
-				<button type="submit">
-					Add task
-				</button>
-			</form -->
-
-			<ol class="c-TaskList">
-				<li
-					v-for="(task, index) in tasks"
-					:key="index"
-					:class="{
-						'is-done': task.status === 'done',
-						'is-selected': index === selectedTaskIndex
-					}"
-					class="c-ListItem"
-				>
-					<span
-						v-for="emoji in task.pomodoros"
-						:key="emoji"
-					>🍅</span>
-					<span class="c-ListItem__text">
-						{{ task.text }}
-					</span>
-				</li>
-			</ol>
+			<div class="c-TaskList">
+				<ol>
+					<li
+						v-for="(task, index) in tasks"
+						:key="index"
+						:class="{
+							'is-done': task.status === 'done',
+							'is-selected': index === selectedTaskIndex
+						}"
+						class="c-ListItem"
+					>
+						<span
+							v-for="emoji in task.pomodoros"
+							:key="emoji"
+						>🍅</span>
+						<span class="c-ListItem__text">
+							{{ task.text }}
+						</span>
+					</li>
+				</ol>
+				<div class="c-AddItem"
+					:class="{'is-active': isAddItemTrayOpen}">
+					<form @submit.prevent="addTask">
+						<input
+							id=""
+							v-model="newTaskText"
+							type="text"
+							name="new_task"
+							placeholder="Enter a task and click enter"
+						>
+						<div class="c-AddItem__toggle"
+							@click="toggleTray"
+							v-text="isAddItemTrayOpen ? '^' : '+'">
+						</div>
+					</form>
+				</div>
+			</div>
 
 			<button
 				class="c-Button is-focused"
@@ -75,6 +77,7 @@ export default {
 			showNextTaskFollowup: false,
 			tasks: [],
 			selectedTaskIndex: null,
+			isAddItemTrayOpen: false,
 		};
 	},
 	computed: {
@@ -163,6 +166,9 @@ export default {
 			this.tasks = [];
 			localStorage.removeItem('rtm_tasks');
 		},
+		toggleTray() {
+			this.isAddItemTrayOpen = !this.isAddItemTrayOpen;
+		}
 	},
 };
 </script>
@@ -195,17 +201,23 @@ export default {
 
 	.c-TaskList {
 		margin: 0;
-		margin-bottom: 2rem;
-		overflow: hidden;
-		padding-left: 0;
-		list-style-type: none;
-		border-radius: 0.5rem;
+		margin-bottom: 2.5rem;
+		position: relative;
 		text-align: left;
-		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
+
+		ol {
+			position: relative;
+			margin: 0;
+			box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
+			padding-left: 0;
+			list-style-type: none;
+			overflow: hidden;
+			border-radius: 0.5rem;
+			z-index: 2;
+		}
 	}
 
 	.c-ListItem {
-		position: relative;
 		padding: 1rem 1.75rem;
 		background-color: white;
 		color: lighten(#212121, 3%);
@@ -224,6 +236,47 @@ export default {
 
 		&.is-selected {
 			z-index: 2;
+		}
+	}
+
+	.c-AddItem {
+		position: relative;
+		background-color: white;
+		padding: 1rem 1rem;
+		padding-top: 3rem;
+		border-radius: 0.5rem;
+		width: 100%;
+		box-sizing: border-box;
+		margin-top: -7.2rem;
+		z-index: 1;
+
+		input {
+			box-sizing: border-box;
+			padding: 1rem 1rem;
+			width: 100%;
+			border-radius: 10px;
+			border: 1px solid #e0e0e0;
+		}
+
+		&__toggle {
+			content: '+';
+			background-color: white;
+			color: lighten(#212121, 3%);
+			position: absolute;
+			margin: 0 auto;
+			padding: 0.25rem 0.75rem;
+			padding-bottom: 0.1rem;
+			max-width: 18px;
+			left: 0;
+			right: 0;
+			bottom: -20px;
+			text-align: center;
+			border-bottom-left-radius: 3rem;
+			border-bottom-right-radius: 3rem;
+		}
+
+		&.is-active {
+			margin-top: -2rem;
 		}
 	}
 
