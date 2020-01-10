@@ -1,13 +1,19 @@
-# Frontend boilerplate
+# Random Task Manager
 
-This is a frontend boilerplate: a starting point for sideprojects that requires little to no configuration, thanks to [Parcel](https://parceljs.org/)</a>.
+A task manager that draws a task randomly for you to do.
 
-## Includes:
-- Livereloading
-- SCSS compilation
-- Babel
-- ESLint
-- Jest
-- Autoprefixer
-- Normalize.css
-- Vue.js
+## Project setup
+### Install
+```
+npm install
+```
+
+### Run for development
+```
+npm run dev
+```
+
+### Build for production
+```
+npm run build
+```
