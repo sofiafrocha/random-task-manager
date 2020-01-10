@@ -33,11 +33,9 @@
 			</li>
 		</ol>
 
-		<!-- hr -->
-
 		<button
 			class="c-Button"
-			:disabled="!hasAvailableTask"
+			v-show="!selectedTaskIndex"
 			@click="showNextTask"
 		>
 			Get next task
