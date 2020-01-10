@@ -1,10 +1,14 @@
 {
-    "extends": "airbnb-base",
+    "extends": [
+      "plugin:vue/recommended",
+      "airbnb-base"
+    ],
     "rules": {
       "indent": ["error", "tab"],
       "no-tabs": ["off"],
       "brace-style": ["error", "stroustrup"],
-      "arrow-body-style": ["error", "always"]
+      "arrow-body-style": ["error", "always"],
+      "vue/html-indent": ["error", "tab"]
     },
     "globals": {
       "document": true,
