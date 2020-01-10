@@ -10,10 +10,6 @@
 		<main>
 			<div class="c-TaskList">
 				<ol>
-					<li class="c-ListItem c-ListItem__heading"
-						v-if="tasks.length > 0">
-						Your tasks
-					</li>
 					<li
 						v-for="(task, index) in tasks"
 						:key="index"
@@ -31,23 +27,18 @@
 							{{ task.text }}
 						</span>
 					</li>
+					<li class="c-ListItem c-AddItem">
+						<form @submit.prevent="addTask">
+							<input
+								id=""
+								v-model="newTaskText"
+								type="text"
+								name="new_task"
+								placeholder="Enter a task and click enter"
+							>
+						</form>
+					</li>
 				</ol>
-				<div class="c-AddItem"
-					:class="{'is-active': isAddItemTrayOpen}">
-					<form @submit.prevent="addTask">
-						<input
-							id=""
-							v-model="newTaskText"
-							type="text"
-							name="new_task"
-							placeholder="Enter a task and click enter"
-						>
-						<div class="c-AddItem__toggle"
-							@click="toggleTray"
-							v-text="isAddItemTrayOpen ? '^' : '+'">
-						</div>
-					</form>
-				</div>
 			</div>
 
 			<button
@@ -87,7 +78,6 @@ export default {
 			showNextTaskFollowup: false,
 			tasks: [],
 			selectedTaskIndex: null,
-			isAddItemTrayOpen: false,
 		};
 	},
 	computed: {
@@ -176,9 +166,6 @@ export default {
 			this.tasks = [];
 			localStorage.removeItem('rtm_tasks');
 		},
-		toggleTray() {
-			this.isAddItemTrayOpen = !this.isAddItemTrayOpen;
-		}
 	},
 };
 </script>
@@ -262,43 +249,12 @@ export default {
 	}
 
 	.c-AddItem {
-		position: relative;
-		background-color: white;
-		padding: 1rem 1rem;
-		padding-top: 3rem;
-		border-radius: 0.5rem;
-		width: 100%;
-		box-sizing: border-box;
-		margin-top: -7.2rem;
-		z-index: 1;
-
 		input {
 			box-sizing: border-box;
 			padding: 1rem 1rem;
 			width: 100%;
 			border-radius: 10px;
 			border: 1px solid #e0e0e0;
-		}
-
-		&__toggle {
-			content: '+';
-			background-color: white;
-			color: lighten(#212121, 3%);
-			position: absolute;
-			margin: 0 auto;
-			padding: 0.25rem 0.75rem;
-			padding-bottom: 0.1rem;
-			max-width: 18px;
-			left: 0;
-			right: 0;
-			bottom: -20px;
-			text-align: center;
-			border-bottom-left-radius: 3rem;
-			border-bottom-right-radius: 3rem;
-		}
-
-		&.is-active {
-			margin-top: -2rem;
 		}
 	}
 
