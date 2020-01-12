@@ -15,7 +15,7 @@
 						:key="index"
 						:class="{
 							'is-done': task.status === 'done',
-							'is-selected': index === selectedTaskIndex
+							'is-focused': index === selectedTaskIndex
 						}"
 						class="c-ListItem"
 					>
@@ -218,11 +218,12 @@ export default {
 			list-style-type: none;
 			overflow: hidden;
 			border-radius: 0.5rem;
-			z-index: 3;
+			// z-index: 3;
 		}
 	}
 
 	.c-ListItem {
+		position: relative;
 		padding: 1rem 1.75rem;
 		background-color: white;
 		color: lighten(#212121, 3%);
@@ -243,7 +244,7 @@ export default {
 			}
 		}
 
-		&.is-selected {
+		&.is-focused {
 			z-index: 4;
 		}
 	}
