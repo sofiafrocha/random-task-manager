@@ -170,7 +170,8 @@ export default {
 
 <style lang="scss" scoped>
     .a-RandomTask {
-		padding: 4rem;
+		padding: 2rem;
+		padding-top: 4.5rem;
 		box-sizing: border-box;
 		min-height: 100vh;
 		background-color: lighten(#b2dfdb, 3%);
@@ -188,6 +189,10 @@ export default {
 				margin: auto;
 				padding-top: 1rem;
 			}
+		}
+
+		@media screen and (min-width: 767px) {
+			padding: 4rem;
 		}
 	}
 
@@ -209,6 +214,7 @@ export default {
 		padding-left: 0;
 		list-style-type: none;
 		border-radius: 0.5rem;
+		overflow: hidden;
 		text-align: left;
 		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
 	}
