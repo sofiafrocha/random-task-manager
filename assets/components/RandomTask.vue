@@ -8,38 +8,36 @@
 			Reset
 		</button>
 		<main>
-			<div class="c-TaskList">
-				<ol>
-					<li
-						v-for="(task, index) in tasks"
-						:key="index"
-						:class="{
-							'is-done': task.status === 'done',
-							'is-focused': index === selectedTaskIndex
-						}"
-						class="c-ListItem"
-					>
-						<span
-							v-for="emoji in task.pomodoros"
-							:key="emoji"
-						>🍅</span>
-						<span class="c-ListItem__text">
-							{{ task.text }}
-						</span>
-					</li>
-					<li class="c-ListItem c-AddItem">
-						<form @submit.prevent="addTask">
-							<input
-								id=""
-								v-model="newTaskText"
-								type="text"
-								name="new_task"
-								placeholder="Enter a task and click enter"
-							>
-						</form>
-					</li>
-				</ol>
-			</div>
+			<ol class="c-TaskList">
+				<li
+					v-for="(task, index) in tasks"
+					:key="index"
+					:class="{
+						'is-done': task.status === 'done',
+						'is-focused': index === selectedTaskIndex
+					}"
+					class="c-ListItem"
+				>
+					<span
+						v-for="emoji in task.pomodoros"
+						:key="emoji"
+					>🍅</span>
+					<span class="c-ListItem__text">
+						{{ task.text }}
+					</span>
+				</li>
+				<li class="c-ListItem c-AddItem">
+					<form @submit.prevent="addTask">
+						<input
+							id=""
+							v-model="newTaskText"
+							type="text"
+							name="new_task"
+							placeholder="Enter a task and click enter"
+						>
+					</form>
+				</li>
+			</ol>
 
 			<button
 				class="c-Button is-focused"
@@ -205,21 +203,14 @@ export default {
 	}
 
 	.c-TaskList {
+		position: relative;
 		margin: 0;
 		margin-bottom: 2.5rem;
-		position: relative;
+		padding-left: 0;
+		list-style-type: none;
+		border-radius: 0.5rem;
 		text-align: left;
-
-		ol {
-			position: relative;
-			margin: 0;
-			box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
-			padding-left: 0;
-			list-style-type: none;
-			overflow: hidden;
-			border-radius: 0.5rem;
-			// z-index: 3;
-		}
+		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
 	}
 
 	.c-ListItem {
@@ -230,10 +221,6 @@ export default {
 
 		& + & {
 			border-top: 1px solid #f5f5f5;
-		}
-
-		&__heading {
-			color: lighten(#4db6ac, 30%);
 		}
 
 		&.is-done {
