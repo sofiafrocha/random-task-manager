@@ -97,8 +97,6 @@ export default {
 				let nextTaskIndex = this.getNextTaskIndex();
 
 				while (this.tasks[nextTaskIndex].status === 'done') {
-					console.log('🚨 i got a done task, trying the one below');
-
 					nextTaskIndex += 1;
 
 					if (nextTaskIndex === this.tasks.length) {
@@ -108,8 +106,6 @@ export default {
 
 				this.selectedTaskIndex = nextTaskIndex;
 			}
-
-			console.log('selectedTaskIndex', this.selectedTaskIndex);
 		},
 		getNextTaskIndex() {
 			let randomInt = Math.random() * LINES;
