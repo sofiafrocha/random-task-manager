@@ -6,6 +6,11 @@
 		}"
 		class="c-ListItem"
 	>
+		<span v-if="status !== 'done'"
+			class="c-ListItem__doneBtn"
+			@click="handleDoneClick">
+			✅
+		</span>
 		<span
 			v-for="emoji in count"
 			:key="emoji"
@@ -13,7 +18,7 @@
 
 		<span v-if="status !== 'done'"
 			class="c-ListItem__deleteBtn"
-			@click="handleDeleteClick(index)">
+			@click="handleDeleteClick">
 			🗑
 		</span>
 
@@ -58,8 +63,11 @@ export default {
 		},
 	},
 	methods: {
-		handleDeleteClick(index) {
-			this.$emit('clicked-delete', index);
+		handleDeleteClick() {
+			this.$emit('clicked-delete', this.index);
+		},
+		handleDoneClick() {
+			this.$emit('clicked-done', this.index);
 		},
 		handleTextEdit() {
 			this.$emit('edited-text', {
@@ -79,7 +87,7 @@ export default {
 <style lang="scss" scoped>
 .c-ListItem {
 	position: relative;
-	padding: 1rem 1.75rem;
+	padding: 1rem 2.75rem;
 	background-color: white;
 	color: lighten(#212121, 3%);
 
@@ -91,14 +99,23 @@ export default {
 		top: 0.95rem;
 	}
 
+	&__doneBtn,
 	&__deleteBtn {
 		position: absolute;
 		top: 1rem;
-		right: 1rem;
 		opacity: 0;
 		pointer-events: none;
 		cursor: pointer;
 	}
+
+	&__doneBtn {
+		left: 0.8rem;
+	}
+
+	&__deleteBtn {
+		right: 0.8rem;
+	}
+
 
 	& + & {
 		border-top: 1px solid #f5f5f5;
@@ -116,7 +133,8 @@ export default {
 		z-index: 4;
 	}
 
-	&:hover .c-ListItem__deleteBtn {
+	&:hover .c-ListItem__deleteBtn,
+	&:hover .c-ListItem__doneBtn {
 		opacity: 1;
 		pointer-events: initial;
 	}

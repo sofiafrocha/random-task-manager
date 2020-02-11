@@ -18,6 +18,7 @@
 					:index="index"
 					:selected-index="selectedTaskIndex"
 					@clicked-delete="deleteTask"
+					@clicked-done="markTaskAsDone"
 					@edited-text="editTaskText"
 				></ListItem>
 				<li class="c-ListItem c-AddItem">
@@ -121,6 +122,10 @@ export default {
 		},
 		addPomodoro() {
 			this.tasks[this.selectedTaskIndex].pomodoros += 1;
+		},
+		markTaskAsDone(index) {
+			this.tasks[index].status = 'done';
+			this.saveStateToLocalStorage();
 		},
 		finishTask() {
 			this.addPomodoro();
