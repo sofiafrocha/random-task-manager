@@ -17,7 +17,8 @@
 					:text="task.text"
 					:index="index"
 					:selected-index="selectedTaskIndex"
-					@clicked-delete="deleteTask(index)"
+					@clicked-delete="deleteTask"
+					@edited-text="editTaskText"
 				></ListItem>
 				<li class="c-ListItem c-AddItem">
 					<form @submit.prevent="addTask">
@@ -151,6 +152,10 @@ export default {
 		deleteTask(index) {
 			this.tasks.splice(index, 1);
 
+			this.saveStateToLocalStorage();
+		},
+		editTaskText(input) {
+			this.tasks[input.index].text = input.newText;
 			this.saveStateToLocalStorage();
 		},
 		saveStateToLocalStorage() {

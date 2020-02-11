@@ -10,9 +10,16 @@
 			v-for="emoji in count"
 			:key="emoji"
 		>🍅</span>
-		<span class="c-ListItem__text">
-			{{ text }}
-		</span>
+
+		<contenteditable
+			class="c-ListItem__text"
+			tag="span"
+			:contenteditable="status !== 'done'"
+			v-model="internalText"
+			:noNL="true"
+			@keydown="handleTextEdit"
+			@returned="handleTextEdit" />
+
 		<span class="c-ListItem__deleteBtn"
 			@click="handleDeleteClick(index)">
 			🗑
@@ -23,6 +30,11 @@
 <script>
 export default {
 	name: 'ListItem',
+	data() {
+		return {
+			internalText: this.text,
+		};
+	},
 	props: {
 		status: {
 			type: String,
@@ -48,6 +60,17 @@ export default {
 		handleDeleteClick(index) {
 			this.$emit('clicked-delete', index);
 		},
+		handleTextEdit() {
+			this.$emit('edited-text', {
+				newText: this.internalText,
+				index: this.index,
+			});
+		},
+	},
+	watch: {
+		text() {
+			this.internalText = this.text;
+		},
 	},
 };
 </script>
@@ -58,6 +81,14 @@ export default {
 	padding: 1rem 1.75rem;
 	background-color: white;
 	color: lighten(#212121, 3%);
+
+	input {
+		font-family: "Roboto Mono", monospace;
+		font-size: 16px;
+		position: absolute;
+		left: 1.5rem;
+		top: 0.95rem;
+	}
 
 	&__deleteBtn {
 		position: absolute;

@@ -27,6 +27,7 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^2.6.11",
+    "vue-contenteditable": "^1.0.2",
     "vue-hot-reload-api": "^2.3.4"
   },
   "devDependencies": {
