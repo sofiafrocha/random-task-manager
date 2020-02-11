@@ -25,6 +25,10 @@
 					<span class="c-ListItem__text">
 						{{ task.text }}
 					</span>
+					<span class="c-ListItem__deleteBtn"
+						@click="deleteTask(index)">
+						🗑
+					</span>
 				</li>
 				<li class="c-ListItem c-AddItem">
 					<form @submit.prevent="addTask">
@@ -150,6 +154,11 @@ export default {
 
 			this.saveStateToLocalStorage();
 		},
+		deleteTask(index) {
+			this.tasks.splice(index, 1);
+
+			this.saveStateToLocalStorage();
+		},
 		saveStateToLocalStorage() {
 			localStorage.setItem('rtm_tasks', JSON.stringify(this.tasks));
 		},
@@ -225,6 +234,15 @@ export default {
 		background-color: white;
 		color: lighten(#212121, 3%);
 
+		&__deleteBtn {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			opacity: 0;
+			pointer-events: none;
+			cursor: pointer;
+		}
+
 		& + & {
 			border-top: 1px solid #f5f5f5;
 		}
@@ -239,6 +257,11 @@ export default {
 
 		&.is-focused {
 			z-index: 4;
+		}
+
+		&:hover .c-ListItem__deleteBtn {
+			opacity: 1;
+			pointer-events: initial;
 		}
 	}
 
