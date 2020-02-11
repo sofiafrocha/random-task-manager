@@ -11,6 +11,12 @@
 			:key="emoji"
 		>🍅</span>
 
+		<span v-if="status !== 'done'"
+			class="c-ListItem__deleteBtn"
+			@click="handleDeleteClick(index)">
+			🗑
+		</span>
+
 		<contenteditable
 			class="c-ListItem__text"
 			tag="span"
@@ -19,11 +25,6 @@
 			:noNL="true"
 			@keydown="handleTextEdit"
 			@returned="handleTextEdit" />
-
-		<span class="c-ListItem__deleteBtn"
-			@click="handleDeleteClick(index)">
-			🗑
-		</span>
 	</li>
 </template>
 
