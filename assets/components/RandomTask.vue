@@ -9,27 +9,16 @@
 		</button>
 		<main>
 			<ol class="c-TaskList">
-				<li
+				<ListItem
 					v-for="(task, index) in tasks"
 					:key="index"
-					:class="{
-						'is-done': task.status === 'done',
-						'is-focused': index === selectedTaskIndex
-					}"
-					class="c-ListItem"
-				>
-					<span
-						v-for="emoji in task.pomodoros"
-						:key="emoji"
-					>🍅</span>
-					<span class="c-ListItem__text">
-						{{ task.text }}
-					</span>
-					<span class="c-ListItem__deleteBtn"
-						@click="deleteTask(index)">
-						🗑
-					</span>
-				</li>
+					:status="task.status"
+					:count="task.pomodoros"
+					:text="task.text"
+					:index="index"
+					:selected-index="selectedTaskIndex"
+					@clicked-delete="deleteTask(index)"
+				></ListItem>
 				<li class="c-ListItem c-AddItem">
 					<form @submit.prevent="addTask">
 						<input
@@ -70,10 +59,15 @@
 </template>
 
 <script>
+import ListItem from './ListItem.vue';
+
 const LINES = 32;
 
 export default {
 	name: 'ARandomTask',
+	components: {
+		ListItem,
+	},
 	data() {
 		return {
 			newTaskText: '',
@@ -228,44 +222,12 @@ export default {
 		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
 	}
 
-	.c-ListItem {
+	.c-AddItem {
 		position: relative;
 		padding: 1rem 1.75rem;
 		background-color: white;
 		color: lighten(#212121, 3%);
 
-		&__deleteBtn {
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-			opacity: 0;
-			pointer-events: none;
-			cursor: pointer;
-		}
-
-		& + & {
-			border-top: 1px solid #f5f5f5;
-		}
-
-		&.is-done {
-			.c-ListItem__text {
-				color: lightgray;
-				font-style: italic;
-				text-decoration: line-through;
-			}
-		}
-
-		&.is-focused {
-			z-index: 4;
-		}
-
-		&:hover .c-ListItem__deleteBtn {
-			opacity: 1;
-			pointer-events: initial;
-		}
-	}
-
-	.c-AddItem {
 		input {
 			box-sizing: border-box;
 			padding: 1rem 1rem;
