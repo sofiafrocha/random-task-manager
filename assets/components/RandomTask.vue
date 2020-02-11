@@ -3,9 +3,14 @@
 		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
 		<button
 			@click="resetData"
-			class="c-ResetButton"
+			class="c-ExtrasButton"
 		>
 			Reset
+		</button>
+		<button
+			@click="exportData"
+			class="c-ExtrasButton">
+			Export
 		</button>
 		<main>
 			<ol class="c-TaskList">
@@ -61,6 +66,7 @@
 </template>
 
 <script>
+import promptUserToDownloadJSON from '../js/export_tasks';
 import ListItem from './ListItem.vue';
 
 const LINES = 32;
@@ -173,6 +179,9 @@ export default {
 			this.tasks = [];
 			localStorage.removeItem('rtm_tasks');
 		},
+		exportData() {
+			promptUserToDownloadJSON(this.tasks);
+		},
 	},
 };
 </script>
@@ -265,7 +274,7 @@ export default {
 		}
 	}
 
-	.c-ResetButton {
+	.c-ExtrasButton {
 		appearance: none;
 		background-color: transparent;
 		position: absolute;
@@ -276,6 +285,10 @@ export default {
 		font-family: 'Roboto Mono', monospace;
 		font-size: 0.8rem;
 		cursor: pointer;
+
+		& + & {
+			top: 4rem;
+		}
 	}
 </style>
 
