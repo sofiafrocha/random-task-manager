@@ -1,5 +1,8 @@
-{
-    "extends": "airbnb-base",
+module.exports = {
+    "extends": [
+      "plugin:vue/base",
+      "airbnb-base"
+    ],
     "rules": {
       "indent": ["error", "tab"],
       "no-tabs": ["off"],
@@ -27,4 +30,4 @@
       "test": true,
       "window": true
     }
-}
+};
