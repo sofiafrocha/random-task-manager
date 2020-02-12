@@ -17,3 +17,6 @@ npm run dev
 ```
 npm run build
 ```
+
+## Try it out
+https://objective-nobel-ec8634.netlify.com/
