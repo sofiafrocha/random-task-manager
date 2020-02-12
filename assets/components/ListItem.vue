@@ -28,7 +28,7 @@
 			:contenteditable="status !== 'done'"
 			v-model="internalText"
 			:noNL="true"
-			@keydown="handleTextEdit"
+			@keyup="handleTextEdit"
 			@returned="handleTextEdit" />
 	</li>
 </template>
