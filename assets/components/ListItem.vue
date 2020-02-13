@@ -16,8 +16,7 @@
 			:key="emoji"
 		>🍅</span>
 
-		<span v-if="status !== 'done'"
-			class="c-ListItem__deleteBtn"
+		<span class="c-ListItem__deleteBtn"
 			@click="handleDeleteClick">
 			🗑
 		</span>
