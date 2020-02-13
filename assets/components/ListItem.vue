@@ -16,8 +16,7 @@
 			:key="emoji"
 		>🍅</span>
 
-		<span v-if="status !== 'done'"
-			class="c-ListItem__deleteBtn"
+		<span class="c-ListItem__deleteBtn"
 			@click="handleDeleteClick">
 			🗑
 		</span>
@@ -70,8 +69,10 @@ export default {
 			this.$emit('clicked-done', this.index);
 		},
 		handleTextEdit() {
+			const newText = this.internalText.length > 0 ? this.internalText : '...';
+
 			this.$emit('edited-text', {
-				newText: this.internalText,
+				newText,
 				index: this.index,
 			});
 		},
@@ -88,12 +89,14 @@ export default {
 .c-ListItem {
 	position: relative;
 	padding: 1rem 2.75rem;
+	box-sizing: border-box;
+	min-height: 3rem;
 	background-color: white;
 	color: lighten(#212121, 3%);
 
 	input {
 		font-family: "Roboto Mono", monospace;
-		font-size: 16px;
+		font-size: 1rem;
 		position: absolute;
 		left: 1.5rem;
 		top: 0.95rem;
