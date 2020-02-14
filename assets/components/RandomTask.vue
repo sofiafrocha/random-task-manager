@@ -1,17 +1,6 @@
 <template>
 	<div class="a-RandomTask" :class="{ 'is-empty': tasks.length === 0 }">
 		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
-		<button
-			@click="resetData"
-			class="c-ExtrasButton"
-		>
-			Reset
-		</button>
-		<button
-			@click="exportData"
-			class="c-ExtrasButton">
-			Export
-		</button>
 		<main>
 			<ol class="c-TaskList">
 				<ListItem
@@ -62,6 +51,34 @@
 				</button>
 			</div>
 		</main>
+
+		<section class="c-Extras">
+			<button class="c-Extras__btn is-trigger"
+				title="Show extra options"
+				@click="isExtrasVisible = !isExtrasVisible">
+				⚙
+			</button>
+			<ul class="c-Extras__list"
+				v-show="isExtrasVisible">
+				<li>
+					<button
+						@click="resetData"
+						class="c-Extras__btn"
+						title="Reset task list"
+					>
+						Reset
+					</button>
+				</li>
+				<li>
+					<button
+						@click="exportData"
+						class="c-Extras__btn"
+						title="Export task list">
+						Export
+					</button>
+				</li>
+			</ul>
+		</section>
 	</div>
 </template>
 
@@ -82,6 +99,7 @@ export default {
 			showNextTaskFollowup: false,
 			tasks: [],
 			selectedTaskIndex: null,
+			isExtrasVisible: false,
 		};
 	},
 	computed: {
@@ -187,6 +205,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.c-Extras {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+
+	&__btn {
+		appearance: none;
+		background-color: transparent;
+		border: none;
+		font-family: 'Roboto Mono', monospace;
+		cursor: pointer;
+
+		&.is-trigger {
+			font-size: 1.5rem;
+		}
+	}
+
+	&__list {
+		position: absolute;
+		bottom: 2rem;
+		right: 0;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		text-align: right;
+
+		li {
+			margin: 0.25rem 0;
+		}
+	}
+}
     .a-RandomTask {
 		padding: 2rem;
 		padding-top: 4.5rem;
@@ -271,23 +321,6 @@ export default {
 			background-color: #f57c00;
 			border: 1px solid #f57c00;
 			border-bottom: 1px solid #ef6c00;
-		}
-	}
-
-	.c-ExtrasButton {
-		appearance: none;
-		background-color: transparent;
-		position: absolute;
-		top: 2rem;
-		left: 2rem;
-		color: #26a69a;
-		border: none;
-		font-family: 'Roboto Mono', monospace;
-		font-size: 0.8rem;
-		cursor: pointer;
-
-		& + & {
-			top: 4rem;
 		}
 	}
 </style>
