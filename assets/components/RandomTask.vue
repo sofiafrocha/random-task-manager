@@ -221,6 +221,13 @@ export default {
 	}
 }
 
+.c-TaskList {
+	margin-bottom: 2.5rem;
+	text-align: left;
+	list-style-type: disc;
+	padding-left: 1.4rem;
+}
+
 .c-Extras {
 	position: fixed;
 	bottom: 1rem;
@@ -277,18 +284,6 @@ export default {
 		@media screen and (min-width: 767px) {
 			padding: 4rem;
 		}
-	}
-
-	.c-TaskList {
-		position: relative;
-		margin: 0;
-		margin-bottom: 2.5rem;
-		padding-left: 0;
-		list-style-type: none;
-		border-radius: 0.5rem;
-		overflow: hidden;
-		text-align: left;
-		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
 	}
 
 	.c-Button {
