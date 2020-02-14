@@ -1,6 +1,18 @@
 <template>
 	<div class="a-RandomTask" :class="{ 'is-empty': tasks.length === 0 }">
 		<main>
+			<form class="c-AddItem"
+				@submit.prevent="addTask">
+				<input
+					id=""
+					v-model="newTaskText"
+					type="text"
+					name="new_task"
+					placeholder="Enter a task and press enter"
+					class="c-AddItem__input"
+				>
+			</form>
+
 			<ol class="c-TaskList">
 				<ListItem
 					v-for="(task, index) in tasks"
@@ -14,17 +26,6 @@
 					@clicked-done="markTaskAsDone"
 					@edited-text="editTaskText"
 				></ListItem>
-				<li class="c-ListItem c-AddItem">
-					<form @submit.prevent="addTask">
-						<input
-							id=""
-							v-model="newTaskText"
-							type="text"
-							name="new_task"
-							placeholder="Enter a task and click enter"
-						>
-					</form>
-				</li>
 			</ol>
 
 			<button
@@ -205,6 +206,21 @@ export default {
 
 <style lang="scss" scoped>
 
+.c-AddItem {
+	&__input {
+		box-sizing: border-box;
+		width: 100%;
+		text-align: center;
+		padding: 0.5rem;
+		margin-bottom: 2.5rem;
+		border: none;
+		border-bottom: 2px solid #C4C4C4;
+		background-color: transparent;
+		color: #464646;
+		font-style: italic;
+	}
+}
+
 .c-Extras {
 	position: fixed;
 	bottom: 1rem;
@@ -273,21 +289,6 @@ export default {
 		overflow: hidden;
 		text-align: left;
 		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
-	}
-
-	.c-AddItem {
-		position: relative;
-		padding: 1rem 1.75rem;
-		background-color: white;
-		color: lighten(#212121, 3%);
-
-		input {
-			box-sizing: border-box;
-			padding: 1rem 1rem;
-			width: 100%;
-			border-radius: 10px;
-			border: 1px solid #e0e0e0;
-		}
 	}
 
 	.c-Button {
