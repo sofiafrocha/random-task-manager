@@ -225,7 +225,7 @@ export default {
 	margin-bottom: 2.5rem;
 	text-align: left;
 	list-style-type: disc;
-	padding-left: 1.4rem;
+	padding-left: 1.5rem;
 }
 
 .c-Extras {
