@@ -1,6 +1,5 @@
 <template>
 	<div class="a-RandomTask" :class="{ 'is-empty': tasks.length === 0 }">
-		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
 		<main>
 			<ol class="c-TaskList">
 				<ListItem
@@ -262,17 +261,6 @@ export default {
 		@media screen and (min-width: 767px) {
 			padding: 4rem;
 		}
-	}
-
-	.c-Overlay.is-active {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		background-color: #263238;
-		opacity: 0.8;
-		z-index: 3;
 	}
 
 	.c-TaskList {
