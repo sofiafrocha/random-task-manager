@@ -111,14 +111,16 @@ export default {
 	}
 
 	&.is-done {
+		opacity: 0.35;
+
 		.c-ListItem__text {
-			color: lightgray;
 			font-style: italic;
 			text-decoration: line-through;
 		}
 	}
 
 	&.is-focused {
+		opacity: 1 !important;
 		z-index: 4;
 	}
 

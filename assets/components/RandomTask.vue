@@ -13,7 +13,8 @@
 				>
 			</form>
 
-			<ol class="c-TaskList">
+			<ol class="c-TaskList"
+				:class="{'has-focused': selectedTaskIndex !== null}">
 				<ListItem
 					v-for="(task, index) in tasks"
 					:key="index"
@@ -33,21 +34,21 @@
 				v-show="tasks.length && selectedTaskIndex === null"
 				@click="showNextTask"
 			>
-				Get next task
+				🌀 Get next task
 			</button>
 
-			<div v-show="selectedTaskIndex !== null">
+			<div class="c-TaskFollowup" v-show="selectedTaskIndex !== null">
 				<button
 					class="c-Button is-focused is-secondary"
 					@click="finishTask"
 				>
-					Done
+					✅ Task done
 				</button>
 				<button
 					class="c-Button is-focused"
 					@click="duplicateTask"
 				>
-					Keep task
+					📥 Keep task
 				</button>
 			</div>
 		</main>
@@ -216,16 +217,22 @@ export default {
 		border: none;
 		border-bottom: 2px solid #C4C4C4;
 		background-color: transparent;
+		font-family: 'Ubuntu Mono', monospace;
 		color: #464646;
 		font-style: italic;
 	}
 }
 
 .c-TaskList {
+	margin-top: 0;
 	margin-bottom: 2.5rem;
 	text-align: left;
 	list-style-type: disc;
 	padding-left: 1.5rem;
+
+	&.has-focused li:not(.is-done) {
+		opacity: 0.35;
+	}
 }
 
 .c-Extras {
@@ -237,7 +244,8 @@ export default {
 		appearance: none;
 		background-color: transparent;
 		border: none;
-		font-family: 'Roboto Mono', monospace;
+		font-family: 'Ubuntu Mono', monospace;
+		color: #464646;
 		cursor: pointer;
 
 		&.is-trigger {
@@ -259,53 +267,37 @@ export default {
 		}
 	}
 }
-    .a-RandomTask {
-		padding: 2rem;
-		padding-top: 4.5rem;
-		box-sizing: border-box;
-		min-height: 100vh;
-		background-color: lighten(#b2dfdb, 3%);
-		line-height: 1.6rem;
 
-		main {
-			text-align: center;
-			max-width: 450px;
-			margin: 0 auto;
-		}
+.c-Button {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	font-family: 'Ubuntu Mono', monospace;
+	font-weight: bold;
+	color: #464646;
+	cursor: pointer;
+}
 
-		&.is-empty {
-			.c-AddItem {
-				position: relative;
-				margin: auto;
-				padding-top: 1rem;
-			}
-		}
+.c-TaskFollowup {
+	display: flex;
+	justify-content: space-between;
+}
 
-		@media screen and (min-width: 767px) {
-			padding: 4rem;
-		}
+.a-RandomTask {
+	padding: 2rem;
+	padding-top: 4.5rem;
+	box-sizing: border-box;
+	min-height: 100vh;
+	line-height: 1.6rem;
+
+	main {
+		max-width: 400px;
+		margin: 0 auto;
 	}
 
-	.c-Button {
-		position: relative;
-		padding: 1rem 1.5rem;
-		border-radius: 2rem;
-		border: 1px solid #4db6ac;
-		border-bottom: 1px solid #26a69a;
-		background-color: #4db6ac;
-		color: darken(#004d40, 3%);
-		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
-		font-family: 'Roboto Mono', monospace;
-
-		&.is-focused {
-			z-index: 4;
-		}
-
-		&.is-secondary {
-			background-color: #f57c00;
-			border: 1px solid #f57c00;
-			border-bottom: 1px solid #ef6c00;
-		}
+	@media screen and (min-width: 767px) {
+		padding: 4rem;
 	}
+}
 </style>
 
