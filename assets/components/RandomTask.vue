@@ -1,19 +1,20 @@
 <template>
 	<div class="a-RandomTask" :class="{ 'is-empty': tasks.length === 0 }">
-		<div class="c-Overlay" :class="{ 'is-active': selectedTaskIndex !== null }"></div>
-		<button
-			@click="resetData"
-			class="c-ExtrasButton"
-		>
-			Reset
-		</button>
-		<button
-			@click="exportData"
-			class="c-ExtrasButton">
-			Export
-		</button>
 		<main>
-			<ol class="c-TaskList">
+			<form class="c-AddItem"
+				@submit.prevent="addTask">
+				<input
+					id=""
+					v-model="newTaskText"
+					type="text"
+					name="new_task"
+					placeholder="Enter a task and press enter"
+					class="c-AddItem__input"
+				>
+			</form>
+
+			<ol class="c-TaskList"
+				:class="{'has-focused': selectedTaskIndex !== null}">
 				<ListItem
 					v-for="(task, index) in tasks"
 					:key="index"
@@ -26,17 +27,6 @@
 					@clicked-done="markTaskAsDone"
 					@edited-text="editTaskText"
 				></ListItem>
-				<li class="c-ListItem c-AddItem">
-					<form @submit.prevent="addTask">
-						<input
-							id=""
-							v-model="newTaskText"
-							type="text"
-							name="new_task"
-							placeholder="Enter a task and click enter"
-						>
-					</form>
-				</li>
 			</ol>
 
 			<button
@@ -44,24 +34,52 @@
 				v-show="tasks.length && selectedTaskIndex === null"
 				@click="showNextTask"
 			>
-				Get next task
+				🌀 Get next task
 			</button>
 
-			<div v-show="selectedTaskIndex !== null">
+			<div class="c-TaskFollowup" v-show="selectedTaskIndex !== null">
 				<button
 					class="c-Button is-focused is-secondary"
 					@click="finishTask"
 				>
-					Done
+					✅ Task done
 				</button>
 				<button
 					class="c-Button is-focused"
 					@click="duplicateTask"
 				>
-					Keep task
+					📥 Keep task
 				</button>
 			</div>
 		</main>
+
+		<section class="c-Extras">
+			<button class="c-Extras__btn is-trigger"
+				title="Show extra options"
+				@click="isExtrasVisible = !isExtrasVisible">
+				⚙
+			</button>
+			<ul class="c-Extras__list"
+				v-show="isExtrasVisible">
+				<li>
+					<button
+						@click="resetData"
+						class="c-Extras__btn"
+						title="Reset task list"
+					>
+						Reset
+					</button>
+				</li>
+				<li>
+					<button
+						@click="exportData"
+						class="c-Extras__btn"
+						title="Export task list">
+						Export
+					</button>
+				</li>
+			</ul>
+		</section>
 	</div>
 </template>
 
@@ -82,6 +100,7 @@ export default {
 			showNextTaskFollowup: false,
 			tasks: [],
 			selectedTaskIndex: null,
+			isExtrasVisible: false,
 		};
 	},
 	computed: {
@@ -187,108 +206,98 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .a-RandomTask {
-		padding: 2rem;
-		padding-top: 4.5rem;
+
+.c-AddItem {
+	&__input {
 		box-sizing: border-box;
-		min-height: 100vh;
-		background-color: lighten(#b2dfdb, 3%);
-		line-height: 1.6rem;
-
-		main {
-			text-align: center;
-			max-width: 450px;
-			margin: 0 auto;
-		}
-
-		&.is-empty {
-			.c-AddItem {
-				position: relative;
-				margin: auto;
-				padding-top: 1rem;
-			}
-		}
-
-		@media screen and (min-width: 767px) {
-			padding: 4rem;
-		}
-	}
-
-	.c-Overlay.is-active {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		background-color: #263238;
-		opacity: 0.8;
-		z-index: 3;
-	}
-
-	.c-TaskList {
-		position: relative;
-		margin: 0;
+		width: 100%;
+		text-align: center;
+		padding: 0.5rem;
 		margin-bottom: 2.5rem;
-		padding-left: 0;
-		list-style-type: none;
-		border-radius: 0.5rem;
-		overflow: hidden;
-		text-align: left;
-		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
+		border: none;
+		border-bottom: 2px solid #C4C4C4;
+		background-color: transparent;
+		font-family: 'Ubuntu Mono', monospace;
+		color: #464646;
+		font-style: italic;
 	}
+}
 
-	.c-AddItem {
-		position: relative;
-		padding: 1rem 1.75rem;
-		background-color: white;
-		color: lighten(#212121, 3%);
+.c-TaskList {
+	margin-top: 0;
+	margin-bottom: 2.5rem;
+	text-align: left;
+	list-style-type: disc;
+	padding-left: 1.5rem;
 
-		input {
-			box-sizing: border-box;
-			padding: 1rem 1rem;
-			width: 100%;
-			border-radius: 10px;
-			border: 1px solid #e0e0e0;
-		}
+	&.has-focused li:not(.is-done) {
+		opacity: 0.35;
 	}
+}
 
-	.c-Button {
-		position: relative;
-		padding: 1rem 1.5rem;
-		border-radius: 2rem;
-		border: 1px solid #4db6ac;
-		border-bottom: 1px solid #26a69a;
-		background-color: #4db6ac;
-		color: darken(#004d40, 3%);
-		box-shadow: 0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
-		font-family: 'Roboto Mono', monospace;
+.c-Extras {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
 
-		&.is-focused {
-			z-index: 4;
-		}
-
-		&.is-secondary {
-			background-color: #f57c00;
-			border: 1px solid #f57c00;
-			border-bottom: 1px solid #ef6c00;
-		}
-	}
-
-	.c-ExtrasButton {
+	&__btn {
 		appearance: none;
 		background-color: transparent;
-		position: absolute;
-		top: 2rem;
-		left: 2rem;
-		color: #26a69a;
 		border: none;
-		font-family: 'Roboto Mono', monospace;
-		font-size: 0.8rem;
+		font-family: 'Ubuntu Mono', monospace;
+		color: #464646;
 		cursor: pointer;
 
-		& + & {
-			top: 4rem;
+		&.is-trigger {
+			font-size: 1.5rem;
 		}
 	}
+
+	&__list {
+		position: absolute;
+		bottom: 2rem;
+		right: 0;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		text-align: right;
+
+		li {
+			margin: 0.25rem 0;
+		}
+	}
+}
+
+.c-Button {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	font-family: 'Ubuntu Mono', monospace;
+	font-weight: bold;
+	color: #464646;
+	cursor: pointer;
+}
+
+.c-TaskFollowup {
+	display: flex;
+	justify-content: space-between;
+}
+
+.a-RandomTask {
+	padding: 2rem;
+	padding-top: 4.5rem;
+	box-sizing: border-box;
+	min-height: 100vh;
+	line-height: 1.6rem;
+
+	main {
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	@media screen and (min-width: 767px) {
+		padding: 4rem;
+	}
+}
 </style>
 

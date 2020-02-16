@@ -1,13 +1,8 @@
 @import '../../node_modules/normalize.css/normalize';
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,400i,700&display=swap');
 body {
     background-color:white;
-    // font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Ubuntu Mono', monospace;
     font-size: 16px;
-}
-
-.content {
-
+    color: #464646;
 }

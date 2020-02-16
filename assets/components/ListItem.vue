@@ -88,51 +88,39 @@ export default {
 <style lang="scss" scoped>
 .c-ListItem {
 	position: relative;
-	padding: 1rem 2.75rem;
+	padding: 0.5rem 0.8rem;
 	box-sizing: border-box;
-	min-height: 3rem;
-	background-color: white;
-	color: lighten(#212121, 3%);
-
-	input {
-		font-family: "Roboto Mono", monospace;
-		font-size: 1rem;
-		position: absolute;
-		left: 1.5rem;
-		top: 0.95rem;
-	}
+	min-height: 2.6rem;
+	color: #464646;
 
 	&__doneBtn,
 	&__deleteBtn {
 		position: absolute;
-		top: 1rem;
+		bottom: 0.4rem;
 		opacity: 0;
 		pointer-events: none;
 		cursor: pointer;
 	}
 
 	&__doneBtn {
-		left: 0.8rem;
+		left: -1rem;
 	}
 
 	&__deleteBtn {
 		right: 0.8rem;
 	}
 
-
-	& + & {
-		border-top: 1px solid #f5f5f5;
-	}
-
 	&.is-done {
+		opacity: 0.35;
+
 		.c-ListItem__text {
-			color: lightgray;
 			font-style: italic;
 			text-decoration: line-through;
 		}
 	}
 
 	&.is-focused {
+		opacity: 1 !important;
 		z-index: 4;
 	}
 
